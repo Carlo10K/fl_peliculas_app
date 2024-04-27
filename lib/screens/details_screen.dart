@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
+import "package:peliculas_app/widgets/widgets.dart";
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -13,7 +13,14 @@ class DetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           __CustomAppBar(),
-          SliverList(delegate: SliverChildListDelegate([_PosterAndTitle()]))
+          SliverList(
+              delegate: SliverChildListDelegate([
+            _PosterAndTitle(),
+            _Overview(),
+            _Overview(),
+            _Overview(),
+            const CastingCards()
+          ]))
         ],
       ),
     );
@@ -34,6 +41,7 @@ class __CustomAppBar extends StatelessWidget {
         title: Container(
             width: double.infinity,
             alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.only(bottom: 10),
             color: Colors.black12,
             child: const Text(
               'movie.title',
@@ -103,6 +111,19 @@ class _PosterAndTitle extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text(
+          'Es una España a la que 75 millones de españoles vienen cada año. Por algo será, en cualquier caso, este estadio de fútbol en el que se va a despedir a Mandela es el estadio donde España además se proclamó Campeón del Mundo en su día frente a Holanda de fútbol ¿no? Con lo cual es realmente un momento muy bonito y muy emocionante, sin embargo, me gustan los catalanes porque hacen cosas, en definitiva, quiero transmitir a los españoles un mensaje de esperanza. ETA es una gran nación; España perdón es una gran nación, ¿y la europea?',
+          textAlign: TextAlign.justify,
+          style: Theme.of(context).textTheme.titleSmall),
     );
   }
 }
