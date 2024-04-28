@@ -56,7 +56,7 @@ class _MoviePoster extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           const Text(
-            'StarWars: El retorno de los sid',
+            '',
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
