@@ -97,6 +97,13 @@ class Movie {
     required this.voteCount,
   });
 
+  get fullPosteting {
+    if (this.posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
+    }
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
+
   factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());

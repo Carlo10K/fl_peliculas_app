@@ -8,6 +8,8 @@ class MoviesProvider extends ChangeNotifier {
   String _baseUrl = dotenv.get('BASE_URL');
   String _language = 'es-ES';
 
+  List<Movie> onDisplayMovies = [];
+
   MoviesProvider() {
     print('MoviesProvider inicializado');
 
@@ -22,6 +24,7 @@ class MoviesProvider extends ChangeNotifier {
     final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
 
     if (response.statusCode != 200) return print('error');
-    print(nowPlayingResponse.results[0].title);
+    onDisplayMovies = nowPlayingResponse.results;
+    notifyListeners();
   }
 }
