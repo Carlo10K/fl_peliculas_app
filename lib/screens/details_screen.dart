@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
+import "package:peliculas_app/models/models.dart";
 import "package:peliculas_app/widgets/widgets.dart";
 
 class DetailsScreen extends StatelessWidget {
@@ -6,19 +8,28 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String movie =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
+    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          __CustomAppBar(),
+          __CustomAppBar(
+            movie: movie,
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
-            _PosterAndTitle(),
-            _Overview(),
-            _Overview(),
-            _Overview(),
+            _PosterAndTitle(
+              movie: movie,
+            ),
+            _Overview(
+              movie: movie,
+            ),
+            _Overview(
+              movie: movie,
+            ),
+            _Overview(
+              movie: movie,
+            ),
             const CastingCards()
           ]))
         ],
@@ -28,6 +39,10 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class __CustomAppBar extends StatelessWidget {
+  final Movie movie;
+
+  const __CustomAppBar({super.key, required this.movie});
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -41,15 +56,16 @@ class __CustomAppBar extends StatelessWidget {
         title: Container(
             width: double.infinity,
             alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
             color: Colors.black12,
-            child: const Text(
-              'movie.title',
+            child: Text(
+              movie.title,
               style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
             )),
-        background: const FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+        background: FadeInImage(
+          placeholder: const AssetImage('assets/loading.gif'),
+          image: NetworkImage(movie.fullBackdropPath),
           fit: BoxFit.cover,
         ),
       ),
@@ -58,9 +74,14 @@ class __CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
+  final Movie movie;
+
+  const _PosterAndTitle({super.key, required this.movie});
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final size = MediaQuery.of(context).size;
 
     return Container(
       margin: const EdgeInsets.only(top: 20),
@@ -69,45 +90,49 @@ class _PosterAndTitle extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: const FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('https://via.placeholder.com/200x300'),
+            child: FadeInImage(
+              placeholder: const AssetImage('assets/no-image.jpg'),
+              image: NetworkImage(movie.fullPosteting),
               height: 150,
+              width: 100,
             ),
           ),
           const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'movie.title',
-                style: textTheme.headlineLarge,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                'movie.originalTitle',
-                style: textTheme.titleMedium,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star_outline,
-                    size: 15,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'movie.voteAverage',
-                    style: textTheme.bodySmall,
-                  )
-                ],
-              )
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: size.width - 180),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  movie.title,
+                  style: textTheme.headlineLarge,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  movie.originalTitle,
+                  style: textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_outline,
+                      size: 15,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${movie.voteAverage}',
+                      style: textTheme.bodySmall,
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -116,12 +141,14 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
+  final Movie movie;
+
+  const _Overview({super.key, required this.movie});
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-      child: Text(
-          'Es una España a la que 75 millones de españoles vienen cada año. Por algo será, en cualquier caso, este estadio de fútbol en el que se va a despedir a Mandela es el estadio donde España además se proclamó Campeón del Mundo en su día frente a Holanda de fútbol ¿no? Con lo cual es realmente un momento muy bonito y muy emocionante, sin embargo, me gustan los catalanes porque hacen cosas, en definitiva, quiero transmitir a los españoles un mensaje de esperanza. ETA es una gran nación; España perdón es una gran nación, ¿y la europea?',
+      child: Text(movie.overview,
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.titleSmall),
     );
