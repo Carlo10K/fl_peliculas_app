@@ -33,6 +33,8 @@ class Movie {
     required this.voteCount,
   });
 
+  String? heroId;
+
   get fullPosteting {
     if (this.posterPath != null) {
       return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
