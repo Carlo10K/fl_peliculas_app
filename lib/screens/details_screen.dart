@@ -1,6 +1,4 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:peliculas_app/models/models.dart";
 import "package:peliculas_app/widgets/widgets.dart";
 
@@ -42,7 +40,7 @@ class DetailsScreen extends StatelessWidget {
 class __CustomAppBar extends StatelessWidget {
   final Movie movie;
 
-  const __CustomAppBar({super.key, required this.movie});
+  const __CustomAppBar({required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +59,7 @@ class __CustomAppBar extends StatelessWidget {
             color: Colors.black12,
             child: Text(
               movie.title,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             )),
         background: FadeInImage(
@@ -77,7 +75,7 @@ class __CustomAppBar extends StatelessWidget {
 class _PosterAndTitle extends StatelessWidget {
   final Movie movie;
 
-  const _PosterAndTitle({super.key, required this.movie});
+  const _PosterAndTitle({required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +145,7 @@ class _PosterAndTitle extends StatelessWidget {
 class _Overview extends StatelessWidget {
   final Movie movie;
 
-  const _Overview({super.key, required this.movie});
+  const _Overview({required this.movie});
   @override
   Widget build(BuildContext context) {
     return Container(

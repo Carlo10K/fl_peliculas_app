@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:peliculas_app/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +40,7 @@ class CastingCards extends StatelessWidget {
 class _CastCard extends StatelessWidget {
   final Cast actor;
 
-  const _CastCard({super.key, required this.actor});
+  const _CastCard({required this.actor});
 
   @override
   Widget build(BuildContext context) {

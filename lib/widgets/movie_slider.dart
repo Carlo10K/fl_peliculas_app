@@ -40,10 +40,10 @@ class _MovieSliderState extends State<MovieSlider> {
         children: [
           if (widget.title != null)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 widget.title!,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           const SizedBox(height: 5),
@@ -68,7 +68,7 @@ class _MoviePoster extends StatelessWidget {
   final Movie movie;
   final String heroId;
 
-  const _MoviePoster({super.key, required this.movie, required this.heroId});
+  const _MoviePoster({required this.movie, required this.heroId});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _MoviePoster extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
-                  placeholder: AssetImage('assets/no-image.jpg'),
+                  placeholder: const AssetImage('assets/no-image.jpg'),
                   image: NetworkImage(movie.fullPosteting),
                   fit: BoxFit.cover,
                   height: 190,

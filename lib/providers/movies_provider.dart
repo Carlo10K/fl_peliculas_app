@@ -5,18 +5,17 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas_app/helpers/debouncer.dart';
 import 'package:peliculas_app/models/models.dart';
-import 'package:peliculas_app/models/search_response.dart';
 
 class MoviesProvider extends ChangeNotifier {
-  String _apiKey = dotenv.get('API_KEY');
-  String _baseUrl = dotenv.get('BASE_URL');
-  String _language = 'es-ES';
+  final String _apiKey = dotenv.get('API_KEY');
+  final String _baseUrl = dotenv.get('BASE_URL');
+  final String _language = 'es-ES';
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
   Map<int, List<Cast>> moviesCast = {};
   int _popularPage = 0;
-  final debouncer = Debouncer(duration: Duration(milliseconds: 500));
+  final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
   final StreamController<List<Movie>> _suggestionsStreamController =
       StreamController.broadcast();
   Stream<List<Movie>> get suggestionStream =>
@@ -79,10 +78,10 @@ class MoviesProvider extends ChangeNotifier {
       _suggestionsStreamController.add(results);
     };
 
-    final timer = Timer.periodic(Duration(milliseconds: 300), (_) {
+    final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
       debouncer.value = searchTerm;
     });
 
-    Future.delayed(Duration(milliseconds: 301)).then((_) => timer.cancel());
+    Future.delayed(const Duration(milliseconds: 301)).then((_) => timer.cancel());
   }
 }
